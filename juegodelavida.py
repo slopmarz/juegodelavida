@@ -1,12 +1,39 @@
 
-import copy, random, sys, time
+import copy
+import random
+import sys
+import time
 
 # Constantes
 ANCHO = 79   # Ancho de la cuadrícula
 ALTO = 20  # Alto de la cuadrícula
-
 VIVO = 'O'  # Carácter para la celda viva
 MUERTO = ' '   # Carácter para la celda muerta
+print("¿Modificar ANCHO de la cuadricula? (S/N)")
+opcAncho = input()
+#CUALQUIER OTRA OPCION ES INTERPRETADA COMO NO
+if opcAncho == 'S':
+    print("Nuevo ANCHO?")
+    nuevoAncho = int(input())
+    if nuevoAncho > 0:
+        ANCHO = nuevoAncho
+print("¿Modificar ALTO de la cuadricula? (S/N)")
+opcAlto = input()
+#CUALQUIER OTRA OPCION ES INTERPRETADA COMO NO
+if opcAlto == 'S':
+    print("Nuevo ALTO")
+    nuevoAlto = int(input())
+    if nuevoAlto > 0:
+        ALTO = nuevoAlto
+print("¿Modificar caracter celula viva? (S/N)")
+opcCel = input()
+#CUALQUIER OTRA OPCION ES INTERPRETADA COMO NO
+if opcCel == 'S':
+    print("Nuevo caracter celula viva")
+    nuevoCarCel = input()
+    if len(nuevoCarCel) == 1:
+        VIVO = nuevoCarCel
+
 
 # Las variables celulas y siguientesCelulas son diccionarios que contienen
 # el estado actual del juego y el siguiente.
@@ -39,7 +66,7 @@ while True:  # bucle principal del programa
     for x in range(ANCHO):
         for y in range(ALTO):
             # Obtenemos las coordenadas de las vecinas incluso si están en el límite
-            izquierda  = (x - 1) % ANCHO
+            izquierda = (x - 1) % ANCHO
             derecha = (x + 1) % ANCHO
             arriba = (y - 1) % ALTO
             abajo = (y + 1) % ALTO
@@ -65,12 +92,11 @@ while True:  # bucle principal del programa
 
             # Basamos el valor de la nueva generación en función
             # de los valores actuales
-            if celulas[(x, y)] == VIVO and (numVecinasVivas == 2
-                                            or numVecinasVivas == 3):
-                    # Cálulas vivas con 2 o 3 vecinas vivas permanecen vivas
-                    siguientesCelulas[(x, y)] = VIVO
-            elif celulas[(x, y)] == MUERTO and numVecinasVivas == 3:
-                # Células muertas con 3 vecinas vivas cobran vida
+            if celulas[(x, y)] == VIVO and (numVecinasVivas == 2 or numVecinasVivas == 3):
+                # Cálulas vivas con 2 o 3 vecinas vivas permanecen vivas
+                siguientesCelulas[(x, y)] = VIVO
+            elif celulas[(x, y)] == MUERTO and numVecinasVivas >= 2:
+                # Células muertas con 2 O MAS vecinas vivas cobran vida
                 siguientesCelulas[(x, y)] = VIVO
             else:
                 # En cualquier otro caso continuan muertas
